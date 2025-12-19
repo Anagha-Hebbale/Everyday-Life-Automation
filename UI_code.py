@@ -21,8 +21,7 @@ CSV_FILE = "Bengaluru_Restaurants.csv"
 
 # -------------------- CHART STYLING --------------------
 def apply_chart_style():
-    """Apply consistent dark, modern styling to all charts"""
-    # Dark charcoal background that complements Streamlit
+   
     plt.rcParams['figure.facecolor'] = '#1E1E1E'  # Dark charcoal background
     plt.rcParams['axes.facecolor'] = '#2D2D2D'  # Dark gray chart background
     plt.rcParams['axes.edgecolor'] = '#404040'  # Medium gray borders
@@ -37,7 +36,6 @@ def apply_chart_style():
     plt.rcParams['grid.linestyle'] = '--'
 
 
-# Call this once at the beginning
 apply_chart_style()
 
 # -------------------- STREAMLIT SETUP --------------------
@@ -109,8 +107,7 @@ class ExpenseManager:
             return pd.DataFrame(columns=["Item", "Amount", "Date"])
 
     def save(self, df):
-        # Just save as-is without datetime conversion
-        df.to_csv(self.file_path, index=False)
+                df.to_csv(self.file_path, index=False)
 
     def add(self, item, amount, date_str):
         """Add expense with manually entered date string"""
@@ -120,7 +117,7 @@ class ExpenseManager:
         new_row = pd.DataFrame({
             "Item": [item],
             "Amount": [float(amount)],
-            "Date": [date_str]  # Store as string, no datetime conversion
+            "Date": [date_str]  # Store as string
         })
 
         df = pd.concat([df, new_row], ignore_index=True)
@@ -275,26 +272,26 @@ def show_reminders():
             st.success("✅ Reminder added!")
             st.rerun()
 
-    # Task frequency bar chart - TALLER, NARROWER, BRIGHTER GREEN
+    # Task frequency bar chart 
     if tasks:
         st.subheader("📊 Reminder Frequency")
 
         task_names = [t["task"] for t in tasks]
         freq = Counter(task_names)
 
-        # Make chart taller but narrower - better proportions
-        fig, ax = plt.subplots(figsize=(7, 3.5))  # Narrower (7) but taller (3.5)
+        # Make chart have better proportions
+        fig, ax = plt.subplots(figsize=(7, 3.5))  
 
-        # BRIGHTER GREEN with BLACK outline
-        colors = ['#00FFAA' for _ in freq.keys()]  # Bright neon green
+      
+        colors = ['#00FFAA' for _ in freq.keys()]  
         bars = ax.bar(freq.keys(), freq.values(), color=colors,
-                      edgecolor='black', linewidth=2, alpha=0.9)  # Black outline
+                      edgecolor='black', linewidth=2, alpha=0.9)  
 
-        # Add subtle glow effect with brighter colors
+        
         for i, bar in enumerate(bars):
-            # Use bright green gradient
-            bar.set_color(plt.cm.Greens(0.5 + i * 0.05))  # Brighter greens
-            bar.set_edgecolor('black')  # Black outline
+            
+            bar.set_color(plt.cm.Greens(0.5 + i * 0.05)) 
+            bar.set_edgecolor('black')
             bar.set_linewidth(1.5)
 
         ax.set_ylabel("Count", fontsize=10, labelpad=10, color='#E0E0E0')
@@ -304,7 +301,7 @@ def show_reminders():
         ax.spines['left'].set_color('#404040')
         ax.spines['bottom'].set_color('#404040')
 
-        # Set tick colors for dark theme
+      
         ax.tick_params(axis='x', colors='#B0B0B0', rotation=45, labelsize=9)
         ax.tick_params(axis='y', colors='#B0B0B0', labelsize=9)
 
@@ -370,7 +367,7 @@ def show_expenses():
             with col2:
                 amount = st.number_input("Amount (₹)", min_value=0.0, value=0.0, step=10.0)
             with col3:
-                # Manual date entry - no datetime module issues
+                # Manual date entry 
                 date_input = st.text_input("Date (YYYY-MM-DD)",
                                            value=datetime.date.today().isoformat(),
                                            placeholder="YYYY-MM-DD")
@@ -392,7 +389,7 @@ def show_expenses():
         df = em.load()
         if not df.empty:
             st.subheader("📋 Expense History")
-            # Sort by date string (works because YYYY-MM-DD format sorts correctly)
+            # Sort by date string 
             display_df = df.copy()
             if 'Date' in display_df.columns:
                 display_df = display_df.sort_values("Date", ascending=False)
@@ -407,7 +404,7 @@ def show_expenses():
         for insight in insights:
             st.info(insight)
 
-        # Simple bar chart without datetime operations
+        # Simple bar chart 
         if not df.empty:
             st.subheader("📈 Top Spending Categories")
 
@@ -594,3 +591,4 @@ page_name = st.sidebar.radio("Navigate", list(pages.keys()))
 st.title("🧠 Smart Life Hub Dashboard")
 
 pages[page_name]()
+
