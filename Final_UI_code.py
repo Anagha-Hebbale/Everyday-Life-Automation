@@ -592,4 +592,5 @@ page_name = st.sidebar.radio("Navigate", list(pages.keys()))
 
 # Show selected page
 st.title("🧠 Smart Life Hub Dashboard")
+
 pages[page_name]()
