@@ -13,7 +13,9 @@ The repository contains the source code, sample datasets, and input–output scr
 - `.gitignore` – Git ignore configuration  
 
 Create a .env file Create a file named .env in the root directory of the project. 
+
 Add your API keys in the following format: 
 
 OPENWEATHER_API_KEY=your_api_key_here 
+
 NEWS_API_KEY=your_api_key_here
